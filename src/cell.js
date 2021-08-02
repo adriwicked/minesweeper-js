@@ -17,12 +17,21 @@ export default function CellFactory() {
     return content
   }
 
+  function getVisual() {
+    return revealed 
+      ? content
+      : marked
+        ? 'x'
+        : highlighted
+          ? '*'
+          : '-'
+  }
+
   return {
     isRevealed: () => revealed,
     reveal,
-    getContent: () => content,
-    // getVisual: () => content,
-    getVisual: () => revealed ? content : marked ? 'x' : highlighted ? '*' : '-',
+    getContent: () => content,    
+    getVisual,
     placeBomb: () => content = 'o',
     switchMarked: () => marked = !marked,
     setHighlight: value => highlighted = value,

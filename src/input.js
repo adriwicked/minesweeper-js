@@ -1,7 +1,7 @@
 let canvas
 let mouseMoveObservers = []
 let mouseClickObservers = []
-let mousHoldObservers = []
+let mouseHoldObservers = []
 const holdDuration = 300
 let leftClickDown = false
 let holdFinished = false
@@ -30,11 +30,11 @@ function unsubscribeMouseClick(fn) {
 }
 
 function subscribeMouseHold(fn) {
-  mousHoldObservers.push(fn)
+  mouseHoldObservers.push(fn)
 }
 
 function unsubscribeMouseHold(fn) {
-  mousHoldObservers = mousHoldObservers.filter(obs => obs !== fn)
+  mouseHoldObservers = mouseHoldObservers.filter(obs => obs !== fn)
 }
 
 function notifyNewMousePosition(e) {
@@ -56,7 +56,7 @@ function notifyMouseHold(e) {
   console.log('HODL!')
   holdFinished = true
   const canvasCoords = getCanvasCoords(e)
-  mousHoldObservers.forEach(fn => fn(canvasCoords))
+  mouseHoldObservers.forEach(fn => fn(canvasCoords))
 }
 
 function notifyMouseClick(e) {

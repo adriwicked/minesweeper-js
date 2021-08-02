@@ -1,0 +1,31 @@
+{
+  "name": "minesweeper-js",
+  "version": "0.0.1",
+  "description": "A minimalist javascript version of minesweeper",
+  "main": "src/index.js",
+  "type" : "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adriwicked/minesweeper-js.git"
+  },
+  "author": "Adrian Moreno <adrianmn90@gmail.com> (https://adrianmn.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adriwicked/minesweeper-js/issues"
+  },
+  "homepage": "https://github.com/adriwicked/minesweeper-js#readme",
+  "keywords": [
+    "minesweeper",
+    "javascript",
+    "game"
+  ],
+  "devDependencies": {
+    "jest": "^27.0.6"
+  },
+  "jest": {
+    "transform": {}
+  }
+}
