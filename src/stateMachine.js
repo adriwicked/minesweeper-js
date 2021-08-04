@@ -1,6 +1,7 @@
-import menuInteractor from './interactors/menuInteractor'
-import boardInteractor from './interactors/boardInteractor'
-import board from './board'
+import menuInteractor from './interactors/menuInteractor.js'
+import boardInteractor from './interactors/boardInteractor.js'
+
+let board
 
 export default {
   state: 'READY',
@@ -12,17 +13,16 @@ export default {
       }
     },
     MENU: {
-      startGame() {
-        board.init()
+      startGame() {        
         menuInteractor.finish()
-        boardInteractor.init()
+        boardInteractor.init(board)
         this.state = 'GAME'
       }
     },
     GAME: {
       finishGame() {
-        boardInteractor.finish()
-        this.state = 'FINISH'
+        menuInteractor.init()
+        this.state = 'MENU'
       }
     },
     FINISH: {
@@ -39,5 +39,8 @@ export default {
     } else {
       console.log('invalid action');
     }
+  },
+  setBoard(newBoard) {
+    board = newBoard
   }
 }

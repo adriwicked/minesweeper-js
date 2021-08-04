@@ -1,5 +1,5 @@
-import input from '../input'
-import stateMachine from '../stateMachine'
+import input from '../input.js'
+import stateMachine from '../stateMachine.js'
 
 function init() {
   input.subscribeMouseClick(onMouseClick)

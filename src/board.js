@@ -1,4 +1,4 @@
-import CellFactory from './cell'
+import CellFactory from './cell.js'
 
 export default function BoardFactory(width, height, num_mines) {
   let board = []
@@ -12,7 +12,7 @@ export default function BoardFactory(width, height, num_mines) {
     board = detectCellsNumbers(board)    
   }
   
-  function getBoard() {
+  function getBoardContent() {
     return board.map(row => row.map(cell => cell.getContent()))
   }
   
@@ -102,12 +102,9 @@ export default function BoardFactory(width, height, num_mines) {
   }
   
   function revealCell(cellCoord) {
-    const cell = board[cellCoord.y][cellCoord.x]
-    if (cell.getContent() === 'o') {
-      // init()
-    }
-  
+    const cell = board[cellCoord.y][cellCoord.x]    
     recursiveReveal(cellCoord)
+    return cell.getContent()
   }
   
   function recursiveReveal(cellCoord) {
@@ -130,29 +127,14 @@ export default function BoardFactory(width, height, num_mines) {
   
   function switchMarked(cellCoord) {
     board[cellCoord.y][cellCoord.x].switchMarked()
-  }
-  
-  function countCells() {
-    return board.reduce((acc, curr) => {
-      acc += curr.length
-      return acc
-    }, 0)
-  }
-  
-  function countBombs() {
-    return board.reduce((bombs, row) => {
-      bombs += row.filter(cell => cell.getContent() === 'o').length
-      return bombs
-    }, 0)
-  }
+  }    
 
   return {    
+    getBoardContent,
     getBoardVisual,
     highlightCell,
     turnOffHighlightedCell,
     revealCell,
-    switchMarked,
-    countCells,
-    countBombs
+    switchMarked
   }
 }

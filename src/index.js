@@ -1,12 +1,17 @@
-import config from './config'
-import input from './input'
-import boardInteractor from './interactors/boardInteractor'
-import menuInteractor from './interactors/menuInteractor'
-import board from './board'
-import painter from './painter'
-import stateMachine from './stateMachine'
+import config from './config.js'
+import input from './input.js'
+import BoardFactory from './board.js'
+import painter from './painter.js'
+import stateMachine from './stateMachine.js'
 
-let cnv, ctx
+let cnv
+let ctx
+let board
+
+window.onload = function() {
+  const canvas = document.getElementById("cnv");
+  init(canvas)  
+};
 
 function init(canvas) {
   cnv = canvas
@@ -14,6 +19,7 @@ function init(canvas) {
   cnv.height = config.CANVAS_HEIGHT
   ctx = cnv.getContext('2d')
 
+  board = BoardFactory(config.BOARD_WIDTH, config.BOARD_HEIGHT, config.NUM_MINES)
   input.init(cnv)
   painter.init(ctx)
 
@@ -21,6 +27,7 @@ function init(canvas) {
 }
 
 function start() {
+  stateMachine.setBoard(board)
   stateMachine.dispatch('startMenu')
   window.requestAnimationFrame(gameLoop)
 }

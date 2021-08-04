@@ -1,4 +1,4 @@
-import config from './config'
+import config from './config.js'
 
 let ctx
 let boardPosition = { x: 0, y: 0 }

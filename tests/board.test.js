@@ -8,8 +8,20 @@ test('A board is correctly initialized', () => {
         config.NUM_MINES
     )
 
-    expect(board.countBombs()).toBe(10)
-    expect(board.countCells()).toBe(64)
+    const boardContent = board.getBoardContent()
+
+    const numCells = boardContent.reduce((acc, curr) => {
+        acc += curr.length
+        return acc
+      }, 0)
+
+    const numBombs = boardContent.reduce((bombs, row) => {
+        bombs += row.filter(cell => cell === 'o').length
+        return bombs
+    }, 0)
+
+    expect(numBombs).toBe(10)
+    expect(numCells).toBe(64)
 })
 
 test('All board cells start hidden', () => {

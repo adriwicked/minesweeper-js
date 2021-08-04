@@ -1,10 +1,13 @@
-import config from '../config'
-import input from '../input'
-import board from '../board'
+import config from '../config.js'
+import input from '../input.js'
+import stateMachine from '../stateMachine.js'
 
+
+let board
 let boardPosition
 
-function init() {
+function init(newBoard) {
+  board = newBoard
   boardPosition = config.getBoardPosition()
   input.subscribeMouseMove(onMouseMove)
   input.subscribeMouseClick(onMouseClick)
@@ -21,7 +24,10 @@ function onMouseHold(mouseCoord) {
 function onMouseClick(mouseCoord) {
   if (!mouseCoordIsOutOfBoardBounds(mouseCoord)) {
     const cellCoord = mouseCoordToBoardCoord(mouseCoord)
-    board.revealCell(cellCoord)
+    const cellContent = board.revealCell(cellCoord)
+    if (cellContent === 'o') {
+      stateMachine.dispatch('finishGame')
+    }    
   }
 }
 
