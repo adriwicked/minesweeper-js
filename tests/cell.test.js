@@ -12,7 +12,7 @@ test('A bomb can be placed in a cell', () => {
     expect(cell.getContent()).toBe('o')
 })
 
-test('Cell content increments with near bombs', () => {
+test('Cell content increments with nearby bombs', () => {
     const cell = CellFactory()
     expect(cell.getContent()).toBe('0')
     cell.incrementNearbyBombs()
@@ -34,9 +34,11 @@ test('A cell can be highlighted', () => {
     expect(cell.getVisual()).toBe('*')    
 })
 
-test('A cell can be marked as possible bomb', () => {
+test('A cell can be marked and unmarked as possible bomb', () => {
     const cell = CellFactory()
     expect(cell.getVisual()).toBe('-')
     cell.switchMarked()
     expect(cell.getVisual()).toBe('x')
+    cell.switchMarked()
+    expect(cell.getVisual()).toBe('-')
 })
