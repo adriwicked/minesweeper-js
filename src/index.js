@@ -2,33 +2,72 @@ import config from './config.js'
 import input from './input.js'
 import BoardFactory from './board.js'
 import painter from './painter.js'
-import stateMachine from './stateMachine.js'
+import menuInteractor from './interactors/menuInteractor.js'
+import boardInteractor from './interactors/boardInteractor.js'
 
 let cnv
 let ctx
 let board
 
-window.onload = function() {
-  const canvas = document.getElementById("cnv");
-  init(canvas)  
-};
+const stateMachine = {
+  state: 'READY',
+  transitions: {
+    READY: {
+      startMenu() {
+        menuInteractor.init(this)
+        this.state = 'MENU'
+      }
+    },
+    MENU: {
+      startGame() {
+        menuInteractor.finish()
 
-function init(canvas) {
-  cnv = canvas
+        board = BoardFactory(config.BOARD_WIDTH, config.BOARD_HEIGHT, config.NUM_MINES)
+        boardInteractor.init(board, this)
+        this.state = 'GAME'
+      }
+    },
+    GAME: {
+      finishGame() {
+        boardInteractor.finish()
+
+        menuInteractor.init(this)
+        this.state = 'FINISH'
+      }
+    },
+    FINISH: {
+      startGame() {
+        menuInteractor.finish()
+
+        board = BoardFactory(config.BOARD_WIDTH, config.BOARD_HEIGHT, config.NUM_MINES)
+        boardInteractor.init(board, this)
+        this.state = 'GAME'
+      }
+    }
+  },
+  dispatch(actionName) {
+    const action = this.transitions[this.state][actionName]
+
+    if (action) {
+      action.call(this);
+    } else {
+      console.log('invalid action');
+    }
+  }
+}
+
+window.onload = init
+
+function init() {
+  cnv = document.getElementById("cnv");
   cnv.width = config.CANVAS_WIDTH
   cnv.height = config.CANVAS_HEIGHT
   ctx = cnv.getContext('2d')
 
-  board = BoardFactory(config.BOARD_WIDTH, config.BOARD_HEIGHT, config.NUM_MINES)
   input.init(cnv)
   painter.init(ctx)
-
-  start()
-}
-
-function start() {
-  stateMachine.setBoard(board)
   stateMachine.dispatch('startMenu')
+
   window.requestAnimationFrame(gameLoop)
 }
 
@@ -43,6 +82,7 @@ function gameLoop() {
       break;
 
     case 'FINISH':
+      painter.drawFinish(board.getBoardVisual())
       break;
 
     default:

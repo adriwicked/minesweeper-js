@@ -26,6 +26,27 @@ function drawMenu() {
   drawMenuBomb()
 }
 
+function drawFinish(board) {
+  clearCanvas()
+  drawBackground()
+  drawBoard(board)
+  drawBackgroundTransparency()
+  drawBoom()
+}
+
+function drawBoom() {
+  const titlePos = {
+    x: config.CANVAS_WIDTH / 2,
+    y: config.CANVAS_HEIGHT / 2
+  }
+
+  ctx.fillStyle = colors.highlighted
+  ctx.font = "bold 24px Courier New";
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = "center";
+  ctx.fillText('BOOM!', titlePos.x, titlePos.y);
+}
+
 function drawTitle() {
   const titlePos = {
     x: config.CANVAS_WIDTH / 2,
@@ -77,6 +98,11 @@ function drawGame(board) {
 
 function drawBackground() {
   ctx.fillStyle = colors.background
+  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+}
+
+function drawBackgroundTransparency() {
+  ctx.fillStyle = 'rgba(102, 16, 57, 0.5)'
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 }
 
@@ -173,5 +199,6 @@ export default {
   init,
   clearCanvas,
   drawMenu,
-  drawGame
+  drawGame,
+  drawFinish
 }

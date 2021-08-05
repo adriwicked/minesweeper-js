@@ -1,7 +1,9 @@
 import input from '../input.js'
-import stateMachine from '../stateMachine.js'
 
-function init() {
+let stateMachine
+
+function init(newStateMachine) {
+  stateMachine = newStateMachine
   input.subscribeMouseClick(onMouseClick)
 }
 

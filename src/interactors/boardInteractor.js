@@ -1,13 +1,13 @@
 import config from '../config.js'
 import input from '../input.js'
-import stateMachine from '../stateMachine.js'
 
-
+let stateMachine
 let board
 let boardPosition
 
-function init(newBoard) {
-  board = newBoard
+function init(newBoard, newStateMachine) {
+  stateMachine = newStateMachine
+  board = newBoard  
   boardPosition = config.getBoardPosition()
   input.subscribeMouseMove(onMouseMove)
   input.subscribeMouseClick(onMouseClick)
@@ -54,6 +54,13 @@ function mouseCoordIsOutOfBoardBounds(mouseCoord) {
          mouseCoord.y > boardPosition.y + config.getBoardSize()
 }
 
+function finish() {
+  input.unsubscribeMouseMove(onMouseMove)
+  input.unsubscribeMouseClick(onMouseClick)
+  input.unsubscribeMouseHold(onMouseHold)
+}
+
 export default {
-  init
+  init,
+  finish
 }
