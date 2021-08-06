@@ -98,3 +98,42 @@ test('A board cell can be marked and unmarked as possible bomb', () => {
         ]
     )
 })
+
+test('A board can be created predefined', () => {
+    const predefinedBoard = [
+        ['-', '-', 'o'],
+        ['o', '-', '-'],
+        ['-', '-', '-']
+    ]
+    const board = BoardFactory(3, 3, 0, predefinedBoard)
+    
+    expect(board.getBoardContent()).toEqual(
+        [
+            ['1', '2', 'o'],
+            ['o', '2', '1'],
+            ['1', '1', '0']
+        ]
+    )
+})
+
+test('A board can check if it is resolved', () => {
+    const predefinedBoard = [
+        ['-', '-', 'o'],
+        ['o', '-', '-'],
+        ['-', '-', '-']
+    ]
+    const board = BoardFactory(3, 3, 0, predefinedBoard)
+    expect(board.isResolved()).toBe(false)
+    
+    board.revealCell({ y: 0, x: 0 })
+    board.revealCell({ y: 0, x: 1 })
+    
+    board.revealCell({ y: 1, x: 1 })
+    board.revealCell({ y: 1, x: 2 })
+    
+    board.revealCell({ y: 2, x: 0 })
+    board.revealCell({ y: 2, x: 1 })
+    board.revealCell({ y: 2, x: 2 })
+
+    expect(board.isResolved()).toBe(true)
+})
