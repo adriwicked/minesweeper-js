@@ -25,9 +25,14 @@ function onMouseClick(mouseCoord) {
   if (!mouseCoordIsOutOfBoardBounds(mouseCoord)) {
     const cellCoord = mouseCoordToBoardCoord(mouseCoord)
     const cellContent = board.revealCell(cellCoord)
+
     if (cellContent === 'o') {
-      stateMachine.dispatch('finishGame')
-    }    
+      stateMachine.dispatch('loseGame')
+    }
+    
+    if (board.isResolved()) {
+      stateMachine.dispatch('winGame')      
+    }
   }
 }
 

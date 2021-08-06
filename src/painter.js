@@ -26,12 +26,20 @@ function drawMenu() {
   drawMenuBomb()
 }
 
-function drawFinish(board) {
+function drawLost(board) {
   clearCanvas()
   drawBackground()
   drawBoard(board)
   drawBackgroundTransparency()
   drawBoom()
+}
+
+function drawWon(board) {
+  clearCanvas()
+  drawBackground()
+  drawBoard(board)
+  drawBackgroundTransparency()
+  drawYouWon()
 }
 
 function drawBoom() {
@@ -45,6 +53,19 @@ function drawBoom() {
   ctx.textBaseline = 'middle';
   ctx.textAlign = "center";
   ctx.fillText('BOOM!', titlePos.x, titlePos.y);
+}
+
+function drawYouWon() {
+  const titlePos = {
+    x: config.CANVAS_WIDTH / 2,
+    y: config.CANVAS_HEIGHT / 2
+  }
+
+  ctx.fillStyle = colors.highlighted
+  ctx.font = "bold 24px Courier New";
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = "center";
+  ctx.fillText('YOU WON!', titlePos.x, titlePos.y);
 }
 
 function drawTitle() {
@@ -200,5 +221,6 @@ export default {
   clearCanvas,
   drawMenu,
   drawGame,
-  drawFinish
+  drawLost,
+  drawWon
 }

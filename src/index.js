@@ -28,14 +28,29 @@ const stateMachine = {
       }
     },
     GAME: {
-      finishGame() {
+      loseGame() {
         boardInteractor.finish()
 
         menuInteractor.init(this)
-        this.state = 'FINISH'
+        this.state = 'LOST'
+      },
+      winGame() {
+        boardInteractor.finish()
+
+        menuInteractor.init(this)
+        this.state = 'WON'
       }
     },
-    FINISH: {
+    LOST: {
+      startGame() {
+        menuInteractor.finish()
+
+        board = BoardFactory(config.BOARD_WIDTH, config.BOARD_HEIGHT, config.NUM_MINES)
+        boardInteractor.init(board, this)
+        this.state = 'GAME'
+      }
+    },
+    WON: {
       startGame() {
         menuInteractor.finish()
 
@@ -81,8 +96,12 @@ function gameLoop() {
       painter.drawGame(board.getBoardVisual())
       break;
 
-    case 'FINISH':
-      painter.drawFinish(board.getBoardVisual())
+    case 'LOST':
+      painter.drawLost(board.getBoardVisual())
+      break;
+
+    case 'WON':
+      painter.drawWon(board.getBoardVisual())
       break;
 
     default:
